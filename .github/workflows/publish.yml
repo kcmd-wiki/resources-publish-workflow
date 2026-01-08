@@ -22,7 +22,7 @@ jobs:
           POST_CONTENT: ${{ github.event.client_payload.content }}
           POST_ID: ${{ github.event.client_payload.id }}
         run: |
-          python3 ../scripts/write_post.py
+          python3 ../write_post.py
 
       - name: Force Push to Target Repo
         run: |
