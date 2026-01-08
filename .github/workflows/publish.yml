@@ -7,20 +7,27 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Script Repo
+        uses: actions/checkout@v4
+
       - name: Checkout Target Repo
         uses: actions/checkout@v4
         with:
           repository: ${{ github.repository_owner }}/resources
           token: ${{ secrets.KCMD_RESOURCES_REPO_TOKEN }}
-          fetch-depth: 0
+          path: target_repo
 
-      - name: Create Post File
+      - name: Create Post File using Python Script
+        env:
+          POST_CONTENT: ${{ github.event.client_payload.content }}
+          POST_ID: ${{ github.event.client_payload.id }}
         run: |
-          mkdir -p posts
-          echo "${{ github.event.client_payload.content }}" > ${{ github.event.client_payload.filename }}.md
+          cd target_repo
+          python3 ../scripts/write_post.py
 
       - name: Force Push to Target Repo
         run: |
+          cd target_repo
           git config --global user.name "DiscordBot"
           git config --global user.email "bot@example.com"
           
