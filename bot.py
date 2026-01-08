@@ -33,13 +33,10 @@ class PostBot(commands.Bot):
         if interaction.user.id != message.author.id:
             await interaction.response.send_message("❌ 본인의 메시지만 게시할 수 있습니다.", ephemeral=True)
             return
-
         await interaction.response.send_message("🚀 데이터를 전송 중입니다...", ephemeral=True)
-
         print(message.id)
         print(message.content)
         success = await self.sync_with_github(message)
-
         if success:
             await interaction.edit_original_response(content="✅ 웹사이트에 성공적으로 게시/업데이트되었습니다!")
         else:
@@ -65,6 +62,4 @@ class PostBot(commands.Bot):
 
 bot = PostBot()
 bot.run(DISCORD_BOT_TOKEN)
-
-
 
