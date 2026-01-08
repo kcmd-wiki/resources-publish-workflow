@@ -3,6 +3,10 @@ on:
   repository_dispatch:
     types: [publish_post] # 봇이 보낸 event_type과 일치해야 함
 
+concurrency: 
+  group: publish-to-repo-b  # 같은 그룹 이름을 가진 액션들은 줄을 서게 됨
+  cancel-in-progress: false # 이미 실행 중인 게 있다면 취소하지 않고 기다렸다가 실행
+
 jobs:
   publish:
     runs-on: ubuntu-latest

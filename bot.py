@@ -51,7 +51,7 @@ class PostBot(commands.Bot):
         payload = {
             "event_type": "publish_post",  # 액션에서 식별할 이름
             "client_payload": {
-                "filename": str(message.id),
+                "id": str(message.id),
                 "content": message.content
             }
         }
